@@ -16,15 +16,20 @@ func TestDate(t *testing.T) {
 		t.Fatalf("Date() error = %v", err)
 	}
 
-	// Read the output and trim the newline character
 	got := strings.TrimSpace(w.String())
 
-	// Define the expected date format
+	// Validate the format
 	expectedFormat := "Mon Jan 2 15:04:05 MST 2006"
-
-	// Parse the output to validate the format
-	_, err = time.Parse(expectedFormat, got)
+	parsedTime, err := time.Parse(expectedFormat, got)
 	if err != nil {
 		t.Errorf("Date() output format error = %v", err)
+	}
+
+	// Test individual components
+	currentTime := time.Now()
+	if parsedTime.Year() != currentTime.Year() ||
+		parsedTime.Month() != currentTime.Month() ||
+		parsedTime.Day() != currentTime.Day() {
+		t.Errorf("Date() components do not match current time")
 	}
 }
