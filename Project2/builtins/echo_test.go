@@ -2,8 +2,9 @@ package builtins_test
 
 import (
 	"bytes"
-	"github.com/jh125486/CSCE4600/Project2/builtins"
 	"testing"
+
+	"github.com/rks0134/CSCE4600/Project2/builtins"
 )
 
 func TestEcho(t *testing.T) {
