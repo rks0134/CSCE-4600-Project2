@@ -16,12 +16,15 @@ func TestPwd(t *testing.T) {
 		t.Fatalf("Pwd() error = %v", err)
 	}
 
+	// Get the expected working directory
 	expected, err := os.Getwd()
 	if err != nil {
 		t.Skip("Skipping TestPwd as working directory is not accessible")
 	}
 
+	// Trim any extra characters (like newline) from the output
 	got := strings.TrimSpace(w.String())
+
 	if got != expected {
 		t.Errorf("Pwd() = %v, want %v", got, expected)
 	}

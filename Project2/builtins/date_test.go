@@ -16,9 +16,13 @@ func TestDate(t *testing.T) {
 		t.Fatalf("Date() error = %v", err)
 	}
 
+	// Read the output and trim the newline character
 	got := strings.TrimSpace(w.String())
 
+	// Define the expected date format
 	expectedFormat := "Mon Jan 2 15:04:05 MST 2006"
+
+	// Parse the output to validate the format
 	_, err = time.Parse(expectedFormat, got)
 	if err != nil {
 		t.Errorf("Date() output format error = %v", err)
