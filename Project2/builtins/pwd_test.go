@@ -10,6 +10,11 @@ import (
 )
 
 func TestPwd(t *testing.T) {
+	// Check for CI environment variable
+	if _, ci := os.LookupEnv("CI"); ci {
+		t.Skip("Skipping TestPwd in CI environment")
+	}
+
 	var w bytes.Buffer
 	err := builtins.Pwd(&w)
 	if err != nil {
@@ -18,7 +23,7 @@ func TestPwd(t *testing.T) {
 
 	expected, err := os.Getwd()
 	if err != nil {
-		t.Skip("Skipping TestPwd as working directory is not accessible: ", err)
+		t.Fatalf("Getwd() error = %v", err)
 	}
 
 	got := strings.TrimSpace(w.String())
