@@ -1,10 +1,14 @@
+linters-settings:
+  govet:
+    check-shadowing: true
+
 linters:
   enable:
     - govet
     - golint
     - gofmt
     - goimports
-    - ineffassign
-    - staticcheck
-  disable:
-    - errcheck
+
+issues:
+  exclude-rules:
+    - text: "should have comment or be unexported"
