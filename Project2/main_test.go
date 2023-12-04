@@ -11,8 +11,6 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-
-	"github.com/stretchr/testify/require"
 )
 
 func TestPrintPrompt(t *testing.T) {
