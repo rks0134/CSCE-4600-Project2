@@ -8,16 +8,39 @@ import (
 )
 
 func TestEcho(t *testing.T) {
-	args := []string{"hello", "world"}
-	want := "hello world\n"
-
-	var w bytes.Buffer
-	err := builtins.Echo(&w, args...)
-	if err != nil {
-		t.Fatalf("Echo() error = %v", err)
+	testCases := []struct {
+		name string
+		args []string
+		want string
+	}{
+		{
+			name: "Echo with words",
+			args: []string{"hello", "world"},
+			want: "hello world\n",
+		},
+		{
+			name: "Echo with no arguments",
+			args: []string{},
+			want: "\n",
+		},
+		{
+			name: "Echo with special characters",
+			args: []string{"hello!", "@world$"},
+			want: "hello! @world$\n",
+		},
 	}
 
-	if got := w.String(); got != want {
-		t.Errorf("Echo() = %v, want %v", got, want)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			var w bytes.Buffer
+			err := builtins.Echo(&w, tc.args...)
+			if err != nil {
+				t.Fatalf("Echo() error = %v", err)
+			}
+
+			if got := w.String(); got != tc.want {
+				t.Errorf("Echo() = %v, want %v", got, tc.want)
+			}
+		})
 	}
 }
