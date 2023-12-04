@@ -2,6 +2,7 @@ package builtins_test
 
 import (
 	"bytes"
+	"strings"
 	"testing"
 	"time"
 
@@ -12,12 +13,13 @@ func TestDate(t *testing.T) {
 	var w bytes.Buffer
 	err := builtins.Date(&w)
 	if err != nil {
-		t.Errorf("Date() error = %v, wantErr nil", err)
+		t.Fatalf("Date() error = %v", err)
 	}
 
-	// Verify the output format
+	got := strings.TrimSpace(w.String())
+
 	expectedFormat := "Mon Jan 2 15:04:05 MST 2006"
-	_, err = time.Parse(expectedFormat, w.String())
+	_, err = time.Parse(expectedFormat, got)
 	if err != nil {
 		t.Errorf("Date() output format error = %v", err)
 	}
